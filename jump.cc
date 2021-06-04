@@ -20,8 +20,8 @@ NAN_METHOD(JumpConsistentHash)
 {
     Nan::HandleScope();
 
-    uint64_t key = info[0]->IntegerValue();
-    int32_t buckets = info[1]->Uint32Value();
+    uint64_t key = info[0]->Int32Value(Nan::GetCurrentContext()).FromJust();
+    int32_t buckets = info[1]->Uint32Value(Nan::GetCurrentContext()).FromJust();
 
     int32_t dest = jumpConsistentHash(key, buckets);
 
@@ -37,7 +37,7 @@ NAN_METHOD(JumpBuffer)
     size_t length = node::Buffer::Length(buffer);
     const uint8_t* data = reinterpret_cast<const uint8_t* >(node::Buffer::Data(buffer));
     int bytelen = (length < 8 ? length : 8);
-    int32_t buckets = info[1]->Uint32Value();
+    int32_t buckets = info[1]->Uint32Value(Nan::GetCurrentContext()).FromJust();
 
     uint64_t key = 0;
     for (int i = 0; i < bytelen; i++)
